@@ -425,7 +425,7 @@ public class Util {
 		String senhaCriptografada = "";
 		try {
 			byte[] hash = Hashs.gerarHashTexto(senha,MD5);
-			senhaCriptografada=new String(org.bouncycastle.util.encoders.Hex.encode(hash));
+			senhaCriptografada= null; /*new String(org.bouncycastle.util.encoders.Hex.encode(hash));*/
 		} catch (HashingExceptions e) {
 			e.printStackTrace();
 		}

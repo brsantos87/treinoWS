@@ -8,9 +8,6 @@ import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
-import java.security.Security;
-
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 
 
@@ -34,7 +31,7 @@ public class Hashs
 	private static byte[] gerarHash(byte[] buffer,String algoritmoHash) throws NoSuchAlgorithmException, NoSuchProviderException
 	{		
 		//Registra o provedor criptografico da BouncyCastle
-    	Security.addProvider(new BouncyCastleProvider());
+//    	Security.addProvider(new BouncyCastleProvider());
     	
     	//Cria um objeto MessageDigest usando o provedor da BouncyCastle e o algoritmo de Hash indicado em 'algoritmoHash'. Exemplo: SHA1, MD5
         MessageDigest digest=MessageDigest.getInstance(algoritmoHash,"BC");
@@ -108,7 +105,7 @@ public class Hashs
 		byte[] hash=null;
 			
 		// Registra o provedor criptogr�fico da BouncyCastle
-	    Security.addProvider(new BouncyCastleProvider());
+//	    Security.addProvider(new BouncyCastleProvider());
 	    
 	    // Cria um objeto MessageDigest usando o provedor da BouncyCastle e o algoritmo de Hash indicado em 'algoritmoHash'
 	    MessageDigest digest = MessageDigest.getInstance(algoritmoHash,"BC");
