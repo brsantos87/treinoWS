@@ -8,14 +8,14 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.bssistem.infra.arquitetura.integracao.DAO;
-import br.com.bssistem.infra.negocio.bo.ManutencaoBOImpl;
+import br.com.bssistem.infra.negocio.bo.GenericBOImpl;
 import br.com.bssistem.infra.negocio.service.pesquisa.IObjetoDePesquisa;
 import br.com.bssistem.treinows.dominio.entidade.Usuario;
 import br.com.bssistem.treinows.dominio.to.UsuarioTO;
 import br.com.bssistem.treinows.negocio.componente.usuario.dao.UsuarioDAO;
 
 @Component
-public class UsuarioBOImpl extends ManutencaoBOImpl<Usuario, DAO<Usuario>> implements UsuarioBO {
+public class UsuarioBOImpl extends GenericBOImpl<Usuario, DAO<Usuario>> implements UsuarioBO {
 
 	@Inject private UsuarioDAO usuarioDAO;
 	

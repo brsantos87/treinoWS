@@ -1,6 +1,7 @@
 package br.com.bssistem.treinows.dominio;
 
 
+import br.com.bssistem.infra.arquitetura.entidade.GenericCollection;
 import br.com.bssistem.infra.negocio.fabrica.FabricaDeObjetos;
 import br.com.bssistem.treinows.dominio.entidade.Usuario;
 
@@ -16,6 +17,7 @@ public abstract class EntidadeAbsFabrica extends FabricaDeObjetos {
 	} 
 
 	public abstract Usuario createUsuario();
+	public abstract GenericCollection createGenericCollection();
 	
 
 }

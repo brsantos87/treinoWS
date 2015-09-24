@@ -18,7 +18,7 @@ import br.com.bssistem.infra.arquitetura.entidade.Entidade;
 
 @SuppressWarnings("serial")
 @Entity
-@Table(name="usuario")
+@Table(name="TB_USUARIO")
 @XmlRootElement(name="usuario")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Usuario implements Entidade {
@@ -41,7 +41,6 @@ public class Usuario implements Entidade {
 
 	@Override
 	public String getDescricao() {
-
 		return nome;
 	}
 

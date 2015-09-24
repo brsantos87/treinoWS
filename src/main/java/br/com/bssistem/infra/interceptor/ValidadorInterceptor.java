@@ -14,8 +14,8 @@ import org.aspectj.lang.annotation.Pointcut;
 
 import br.com.bssistem.infra.excecoes.NenhumRegistroEncontradoException;
 import br.com.bssistem.infra.excecoes.PesquisaRegistroException;
-import br.com.bssistem.infra.negocio.bo.ManutencaoBO;
-import br.com.bssistem.infra.negocio.bo.ManutencaoBOImpl;
+import br.com.bssistem.infra.negocio.bo.GenericBO;
+import br.com.bssistem.infra.negocio.bo.GenericBOImpl;
 import br.com.bssistem.infra.negocio.service.pesquisa.IObjetoDePesquisa;
 import br.com.bssistem.infra.negocio.service.util.Util;
 import br.com.bssistem.infra.negocio.service.validadores.IValidador;
@@ -33,10 +33,10 @@ public class ValidadorInterceptor {
 	private static ResourceBundle propProjeto = ResourceBundle.getBundle("br.com.bssistem.mensagens_projeto");
 
 	
-	@Pointcut("execution(* br.com.bssistem.infra.negocio.bo.ManutencaoBOImpl.salvar(..)))")
+	@Pointcut("execution(* br.com.bssistem.infra.negocio.bo.GenericBOImpl.salvar(..)))")
 	private void notNullInserir() { }
 	
-	@Pointcut("execution(* br.com.bssistem.infra.negocio.bo.ManutencaoBOImpl.alterar(..)))")
+	@Pointcut("execution(* br.com.bssistem.infra.negocio.bo.GenericBOImpl.alterar(..)))")
 	private void notNullAlterar() { }
 	
 	@Pointcut("execution(* *.pesquisar(..)))")
@@ -74,11 +74,11 @@ public class ValidadorInterceptor {
 	public void validarPesquisaParaPeloMenosUmCampoInformado(JoinPoint pjp){
 		boolean resultado = false;
 
-		if (!(pjp.getThis() instanceof ManutencaoBOImpl)){
+		if (!(pjp.getThis() instanceof GenericBOImpl)){
 			return;
 		}
 		
-		ManutencaoBO<?> manutencaoBO = (ManutencaoBOImpl<?,?>) pjp.getThis();
+		GenericBO<?> manutencaoBO = (GenericBOImpl<?,?>) pjp.getThis();
 		Object objeto = pjp.getArgs()[0];
 		
 		IObjetoDePesquisa objetoDePesquisa = manutencaoBO.definirObjetoDePesquisa();
