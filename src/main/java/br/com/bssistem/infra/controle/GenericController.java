@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Collection;
 
 import org.apache.log4j.Logger;
+import org.hibernate.HibernateException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,7 +45,12 @@ public abstract class GenericController<E extends Entidade, GS extends GenericSe
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<E> save(E entity) {
-		getGenericService().salvar(entity);
+		try {
+			
+			getGenericService().salvar(entity);
+		} catch (HibernateException hex) {
+			return new ResponseEntity<E>(HttpStatus.EXPECTATION_FAILED);
+		}
 		return new ResponseEntity<E>(entity, HttpStatus.OK);
 	}
 

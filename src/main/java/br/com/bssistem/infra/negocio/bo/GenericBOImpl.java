@@ -2,7 +2,6 @@ package br.com.bssistem.infra.negocio.bo;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.ResourceBundle;
 
 import org.hibernate.HibernateException;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,12 +10,10 @@ import br.com.bssistem.infra.arquitetura.entidade.Entidade;
 import br.com.bssistem.infra.arquitetura.integracao.DAO;
 import br.com.bssistem.infra.excecoes.RegistroExistenteException;
 import br.com.bssistem.infra.negocio.service.pesquisa.IObjetoDePesquisa;
+import br.com.bssistem.infra.negocio.service.util.UtilProperties;
 
 public abstract class GenericBOImpl<E extends Entidade, D extends DAO<E>>
 		implements GenericBO<E> {
-	
-	private static ResourceBundle prop = ResourceBundle.getBundle("br.com.bssistem.mensagens");
-	private static ResourceBundle propProjeto = ResourceBundle.getBundle("br.com.bssistem.mensagens_projeto");
 	
 	public abstract DAO<E> getDAO();
 	
@@ -73,19 +70,11 @@ public abstract class GenericBOImpl<E extends Entidade, D extends DAO<E>>
 	private boolean verificarRegistroExistente(E entidade){
 		Collection<E> lista = getDAO().consultarExistente(entidade);
 		if (lista.size() > 0){
-			throw new RegistroExistenteException(getMensagem().getString("MN011"));
+			throw new RegistroExistenteException(UtilProperties.getPropProjeto().getString("register.exist"));
 		}
 		return false;
 	}
 
-	public static ResourceBundle getMensagem() {
-		return prop;
-	}
-	
-	public static ResourceBundle getMensagemProjeto(){
-		return propProjeto;
-	}
-	
 	public abstract IObjetoDePesquisa definirObjetoDePesquisa();
 	
 	public void validar(Object objeto){}

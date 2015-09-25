@@ -14,6 +14,7 @@ import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.ScrollableResults;
 import org.hibernate.SessionFactory;
+import org.hibernate.StaleStateException;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Example;
 import org.hibernate.criterion.MatchMode;
@@ -125,7 +126,16 @@ public abstract class HibernateDAOAbstrato<T extends Entidade> extends Hibernate
 	}
 	
 	public void salvar(T entidade) throws HibernateException{
-		getHibernateTemplate().saveOrUpdate(entidade);
+		try {
+			
+			getHibernateTemplate().saveOrUpdate(entidade);
+		} catch (StaleStateException sse) {
+			// TODO: Implementar Log
+			sse.printStackTrace();
+			throw new HibernateException(sse.getCause());
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 
 	public void merge(T entidade) {
