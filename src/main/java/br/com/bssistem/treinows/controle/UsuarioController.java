@@ -1,6 +1,8 @@
 package br.com.bssistem.treinows.controle;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -56,14 +58,5 @@ public class UsuarioController extends
 		return usuario;
 	}
 
-
-
-	// handles person form submit
-	@RequestMapping(value = "/us", method = RequestMethod.POST)
-	@ResponseBody
-	public String savePerson(Usuario person) {
-		service.salvar(person);
-		return "Saved person: " + person.toString();
-	}
 
 }

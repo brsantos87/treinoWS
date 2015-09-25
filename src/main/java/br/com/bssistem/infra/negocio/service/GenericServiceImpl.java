@@ -4,14 +4,17 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.ResourceBundle;
 
+import org.hibernate.HibernateException;
+
 import br.com.bssistem.infra.arquitetura.entidade.Entidade;
 import br.com.bssistem.infra.negocio.bo.GenericBO;
 
 public abstract class GenericServiceImpl<E extends Entidade, D extends GenericBO<E>>
 		implements GenericService<E> {
 	
-	private ResourceBundle propProjeto = ResourceBundle.getBundle("br.com.bssistem.mensagens_projeto");
-	private ResourceBundle prop = ResourceBundle.getBundle("br.com.bssistem.mensagens");
+	private ResourceBundle propSystemConfig = ResourceBundle.getBundle("system-config");
+	private ResourceBundle propProjeto = ResourceBundle.getBundle(getPropSystemConfig().getString("project.package")+".mensagens_projeto");
+	private ResourceBundle prop = ResourceBundle.getBundle(getPropSystemConfig().getString("project.package")+".mensagens");
 
 	public abstract GenericBO<E> getGenericBO();
 	
@@ -23,7 +26,7 @@ public abstract class GenericServiceImpl<E extends Entidade, D extends GenericBO
 		getGenericBO().alterar(entidade);
 	}
 
-	public void salvar(E entidade) {
+	public void salvar(E entidade) throws HibernateException {
 		getGenericBO().salvar(entidade);
 	}
 
@@ -59,5 +62,11 @@ public abstract class GenericServiceImpl<E extends Entidade, D extends GenericBO
 	public ResourceBundle getProp() {
 		return prop;
 	}
+
+	public ResourceBundle getPropSystemConfig() {
+		return propSystemConfig;
+	}
+	
+	
 	
 }

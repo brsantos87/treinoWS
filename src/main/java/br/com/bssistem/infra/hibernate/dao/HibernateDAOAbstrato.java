@@ -9,6 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.ScrollableResults;
@@ -123,27 +124,8 @@ public abstract class HibernateDAOAbstrato<T extends Entidade> extends Hibernate
 			
 	}
 	
-//	public void deletarTodos(){
-//		Criteria criteria = novoCriteria();
-//		List<LotacaoSarhSincronizada> lotacaoSarhSincronizada = criteria.list();  
-//        for (LotacaoSarhSincronizada lotS : lotacaoSarhSincronizada) {  
-//        	getHibernateTemplate().delete(lotS);
-//        } 
-//        
-//        List<LotacaoFluxusSincronizada> lotacaoFluxusSincronizada = criteria.list();  
-//        for (LotacaoFluxusSincronizada lotf : lotacaoFluxusSincronizada) {  
-//        	getHibernateTemplate().delete(lotf);
-//        } 
-        
-//	}
-	
-	public void salvar(T entidade) {
-		try {
-			getHibernateTemplate().save(entidade);
-		} catch (Exception e) {
-			e.printStackTrace();
-			e.getStackTrace();
-		}
+	public void salvar(T entidade) throws HibernateException{
+		getHibernateTemplate().saveOrUpdate(entidade);
 	}
 
 	public void merge(T entidade) {

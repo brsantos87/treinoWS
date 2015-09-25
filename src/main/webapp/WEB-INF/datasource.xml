@@ -67,7 +67,7 @@
 
 		<property name="packagesToScan">
 			<list>
-				<value>${project.package}.dominio.entidade</value>
+				<value>${orm.entity.scan}</value>
 			</list>
 		</property>
 

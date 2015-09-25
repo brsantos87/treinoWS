@@ -4,12 +4,17 @@ import java.io.Serializable;
 import java.util.Collection;
 
 import org.apache.log4j.Logger;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.com.bssistem.infra.arquitetura.entidade.Entidade;
 import br.com.bssistem.infra.arquitetura.entidade.GenericCollection;
 import br.com.bssistem.infra.negocio.service.GenericService;
 
-public abstract class GenericController<E extends Entidade, MS extends GenericService<E>>
+public abstract class GenericController<E extends Entidade, GS extends GenericService<E>>
 		extends AbstractMenssageController {
 
 	
@@ -36,8 +41,11 @@ public abstract class GenericController<E extends Entidade, MS extends GenericSe
 		getGenericService().alterar(entidade);
 	}
 
-	public void salvar(E entidade) {
-		getGenericService().salvar(entidade);
+	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<E> save(E entity) {
+		getGenericService().salvar(entity);
+		return new ResponseEntity<E>(entity, HttpStatus.OK);
 	}
 
 	public void remover(E entidade) {

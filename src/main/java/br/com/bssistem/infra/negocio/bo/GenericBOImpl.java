@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.ResourceBundle;
 
+import org.hibernate.HibernateException;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.bssistem.infra.arquitetura.entidade.Entidade;
@@ -33,7 +34,7 @@ public abstract class GenericBOImpl<E extends Entidade, D extends DAO<E>>
 	}
 
 	@Transactional
-	public void salvar(E entidade) {
+	public void salvar(E entidade) throws HibernateException{
 			getDAO().salvar(entidade);
 	}
 
