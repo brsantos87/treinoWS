@@ -8,34 +8,37 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSeeAlso;
 
 import br.com.bssistem.treinows.dominio.entidade.Usuario;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @SuppressWarnings("serial")
-@JsonRootName(value="root")
+@JsonRootName(value="lista")
 @JsonSerialize()
-@XmlRootElement(name="root")
+@XmlRootElement(name="lista")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class GenericCollection implements Serializable{
+@XmlSeeAlso({Usuario.class})
+public class GenericCollection<E> implements Serializable{
 
-	@XmlElement(name="element")
-	@JsonProperty(value="usuarios")
-	private Collection<Usuario> lista;
+	@XmlElement(name="elemento")
+	@JsonProperty(value="lista")
+	private Collection<E> lista;
+	
+	public GenericCollection(){
+		
+	}
 
-	public Collection<Usuario> getLista() {
+	public Collection<E> getLista() {
 		if(lista == null)
-			setLista(new ArrayList<Usuario>());
+			setLista(new ArrayList<E>());
 		return lista;
 	}
 
-	@JsonPropertyDescription(value="usuarios")
-	@JsonProperty(value="usuarios")
-	public void setLista(Collection<Usuario> lista) {
+	public void setLista(Collection<E> lista) {
 		this.lista = lista;
 	}
 	

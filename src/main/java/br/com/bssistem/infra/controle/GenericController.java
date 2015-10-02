@@ -1,12 +1,16 @@
 package br.com.bssistem.infra.controle;
 
-import java.io.Serializable;
 import java.util.Collection;
+
+import javax.ws.rs.core.Context;
 
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,7 +22,6 @@ import br.com.bssistem.infra.negocio.service.GenericService;
 public abstract class GenericController<E extends Entidade, GS extends GenericService<E>>
 		extends AbstractMenssageController {
 
-	
 	public GenericController() {
 		super();
 	}
@@ -27,31 +30,50 @@ public abstract class GenericController<E extends Entidade, GS extends GenericSe
 	
 	public abstract GenericService<E> getGenericService();
 	
-	protected Object returnGenericCollection(GenericCollection collection){
+	/*protected Object returnGenericCollection(GenericCollection<E> collection){
 		if(getReturnType().equals(ReturnType.JSON))
 			return collection.getLista();
 		else
 			return collection; 
+	}*/
+	
+	@RequestMapping(value = "/findAll", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<Object> findAll() {
+		GenericCollection<E> list = new GenericCollection<E>();
+		list.setLista(getGenericService().consultar());
+		
+		return new ResponseEntity<Object>(list, HttpStatus.OK);
 	}
 	
-	public E obter(Serializable identificador) {
-		return (E) getGenericService().obter(identificador);
+	
+	@RequestMapping(value = "/findById/{id}", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<E> findById(@PathVariable("id") String identificador) {
+		try{
+			return new ResponseEntity<E>(getGenericService().obter(Long.parseLong(identificador)), HttpStatus.OK);
+			
+		}catch(NumberFormatException nfe){
+		    getHeaders().set("ERRO", nfe.getMessage());
+			return new ResponseEntity<E>(getHeaders(),HttpStatus.BAD_REQUEST);
+		}
 	}
 	
-	public void alterar(E entidade) {
-		getGenericService().alterar(entidade);
-	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<E> save(E entity) {
+	public E save(E entity) {
 		try {
 			
 			getGenericService().salvar(entity);
 		} catch (HibernateException hex) {
-			return new ResponseEntity<E>(HttpStatus.EXPECTATION_FAILED);
+
 		}
-		return new ResponseEntity<E>(entity, HttpStatus.OK);
+		return entity;
+	}
+
+	public void alterar(E entidade) {
+		getGenericService().alterar(entidade);
 	}
 
 	public void remover(E entidade) {

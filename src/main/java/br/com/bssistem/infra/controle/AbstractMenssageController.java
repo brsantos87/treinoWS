@@ -4,10 +4,14 @@ import java.text.MessageFormat;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import org.springframework.http.HttpHeaders;
+
 import br.com.bssistem.infra.excecoes.CampoObrigatorioNaoInformadoException;
 import br.com.bssistem.infra.excecoes.TRFException;
 
 public abstract class AbstractMenssageController extends FilterRequest{
+	
+    private HttpHeaders headers;
 	
 	public static final String USUARIO_LOGADO = "usuarioLogado";
 	
@@ -175,5 +179,17 @@ public abstract class AbstractMenssageController extends FilterRequest{
 		
 		setMensagemSucesso(msg);
 	}
+
+	public HttpHeaders getHeaders() {
+		if(headers == null)
+			setHeaders(new HttpHeaders());
+		return headers;
+	}
+
+	public void setHeaders(HttpHeaders headers) {
+		this.headers = headers;
+	}
+	
+	
 	
 }

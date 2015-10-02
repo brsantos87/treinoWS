@@ -39,12 +39,12 @@
 		<servlet-name>mvc-dispatcher</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-	<filter>
+	<!-- <filter>
 		<filter-name>reqFilter</filter-name>
 		<filter-class>br.com.bssistem.infra.controle.FilterRequest</filter-class>
 	</filter>
 	<filter-mapping>
 		<filter-name>reqFilter</filter-name>
 		<url-pattern>/treinoWS</url-pattern>
-	</filter-mapping>
+	</filter-mapping> -->
 </web-app>
