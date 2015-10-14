@@ -130,11 +130,8 @@ public abstract class HibernateDAOAbstrato<T extends Entidade> extends Hibernate
 			
 			getHibernateTemplate().saveOrUpdate(entidade);
 		} catch (StaleStateException sse) {
-			// TODO: Implementar Log
 			sse.printStackTrace();
 			throw new HibernateException(sse.getCause());
-		} catch (Exception e) {
-			// TODO: handle exception
 		}
 	}
 

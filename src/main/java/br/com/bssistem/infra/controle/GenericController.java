@@ -2,12 +2,8 @@ package br.com.bssistem.infra.controle;
 
 import java.util.Collection;
 
-import javax.ws.rs.core.Context;
-
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,13 +25,6 @@ public abstract class GenericController<E extends Entidade, GS extends GenericSe
 	private Logger logger = Logger.getLogger(GenericController.class);
 	
 	public abstract GenericService<E> getGenericService();
-	
-	/*protected Object returnGenericCollection(GenericCollection<E> collection){
-		if(getReturnType().equals(ReturnType.JSON))
-			return collection.getLista();
-		else
-			return collection; 
-	}*/
 	
 	@RequestMapping(value = "/findAll", method = RequestMethod.GET)
 	@ResponseBody
@@ -62,17 +51,18 @@ public abstract class GenericController<E extends Entidade, GS extends GenericSe
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	@ResponseBody
-	public E save(E entity) {
+	public ResponseEntity<E> save(E entity) {
 		try {
-			
 			getGenericService().salvar(entity);
+			return new ResponseEntity<E>(HttpStatus.OK);
 		} catch (HibernateException hex) {
-
+			return new ResponseEntity<E>(getHeaders(),HttpStatus.BAD_REQUEST);
 		}
-		return entity;
 	}
 
-	public void alterar(E entidade) {
+	@RequestMapping(value = "/update", method = RequestMethod.PUT)
+	@ResponseBody
+	public void update(E entidade) {
 		getGenericService().alterar(entidade);
 	}
 
