@@ -13,7 +13,7 @@ import br.com.bssistem.treinows.negocio.service.manterusuario.UsuarioService;
 @RequestMapping("/user")
 public class UsuarioController extends
 		GenericController<Usuario, UsuarioService> {
-
+	
 	@Autowired
 	private UsuarioService service;
 
@@ -22,7 +22,6 @@ public class UsuarioController extends
 		return service;
 	}
 
-
-
-
+	
+	
 }
