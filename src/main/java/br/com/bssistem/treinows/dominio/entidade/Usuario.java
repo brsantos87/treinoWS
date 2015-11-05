@@ -4,17 +4,16 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
 
 import br.com.bssistem.infra.arquitetura.entidade.Entidade;
+import br.com.bssistem.treinows.dominio.tipo.TipoConta;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -27,12 +26,23 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class Usuario implements Entidade {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+//	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
-	private Long id;
+	private String id;
 
 	@Column(name = "nome")
-	private String nome;
+	private String name;
+	
+	@Column(name="email")
+	private String email;
+	
+	@Column(name="urlImagem")
+	private String picture;
+	
+	@Id
+	@Column(name="tipoConta")
+	@Enumerated(EnumType.STRING)
+	private TipoConta tipoConta;
 
 	@Override
 	public Serializable getIdentificador() {
@@ -41,23 +51,48 @@ public class Usuario implements Entidade {
 
 	@Override
 	public String getDescricao() {
-		return nome;
+		return name;
 	}
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getName() {
+		return name;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setName(String name) {
+		this.name = name;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPicture() {
+		return picture;
+	}
+
+	public void setPicture(String picture) {
+		this.picture = picture;
+	}
+
+	public TipoConta getTipoConta() {
+		return tipoConta;
+	}
+
+	public void setTipoConta(TipoConta tipoConta) {
+		this.tipoConta = tipoConta;
+	}
+
+	
 }

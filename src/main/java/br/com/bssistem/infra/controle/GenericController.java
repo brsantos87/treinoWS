@@ -2,8 +2,14 @@ package br.com.bssistem.infra.controle;
 
 import java.util.Collection;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.http.HttpResponse;
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +29,12 @@ public abstract class GenericController<E extends Entidade, GS extends GenericSe
 	}
 
 	private Logger logger = Logger.getLogger(GenericController.class);
+	
+	@Autowired
+	private HttpServletResponse response;
+	
+	@Autowired
+	private HttpServletRequest request;
 	
 	public abstract GenericService<E> getGenericService();
 	
@@ -99,6 +111,24 @@ public abstract class GenericController<E extends Entidade, GS extends GenericSe
 	public void setLogger(Logger logger) {
 		this.logger = logger;
 	}
+
+	public HttpServletResponse getResponse() {
+		return response;
+	}
+
+	public void setResponse(HttpServletResponse response) {
+		this.response = response;
+	}
+
+	public HttpServletRequest getRequest() {
+		return request;
+	}
+
+	public void setRequest(HttpServletRequest request) {
+		this.request = request;
+	}
+
+	
 
 	
 

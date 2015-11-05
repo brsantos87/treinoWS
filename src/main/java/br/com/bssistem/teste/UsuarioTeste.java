@@ -23,7 +23,7 @@ public class UsuarioTeste {
 	public void test() {
 		Usuario usuario = new Usuario();
 		
-		usuario.setNome("Matheus Lubarino");
+		usuario.setName("Matheus Lubarino");
 		//usuarioControle.incluirUsuarios2(usuario);
 	
 		
